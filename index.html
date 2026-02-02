@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect Coffee | Juba</title>
+    <meta name="description" content="Great Coffee & Tea in Juba. A cozy place for solo dining, groups, and tourists." />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              coffee: {
+                50: '#fdf8f6',
+                100: '#f2e8e5',
+                200: '#eaddd7',
+                300: '#e0cec7',
+                400: '#d2bab0',
+                500: '#a77f72',
+                600: '#8a5a4a',
+                700: '#6f4e37',
+                800: '#5c4033',
+                900: '#3e2b22',
+              },
+              cream: '#F9F5F1',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            animation: {
+              blob: "blob 7s infinite",
+            },
+            keyframes: {
+              blob: {
+                "0%": { transform: "translate(0px, 0px) scale(1)" },
+                "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                "100%": { transform: "translate(0px, 0px) scale(1)" },
+              },
+            },
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react": "https://esm.sh/react@^19.2.4",
+    "framer-motion": "https://esm.sh/framer-motion@^12.29.3",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-coffee-50 text-slate-800 antialiased selection:bg-coffee-200 font-sans">
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#home" class="flex-shrink-0 flex items-center gap-2 group cursor-pointer">
+                    <div class="bg-coffee-600 text-white p-1.5 rounded-lg group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="coffee" class="w-6 h-6"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl tracking-tight text-coffee-900">
+                        Connect Coffee
+                    </span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-coffee-900 hover:text-coffee-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="#menu" class="text-coffee-900 hover:text-coffee-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Menu</a>
+                    <a href="#about" class="text-coffee-900 hover:text-coffee-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                    <a href="#reviews" class="text-coffee-900 hover:text-coffee-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Reviews</a>
+                    <a href="#contact" class="text-coffee-900 hover:text-coffee-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    
+                    <a href="tel:0910389999" class="bg-coffee-600 text-white px-5 py-1.5 rounded-lg hover:bg-coffee-700 transition-all hover:scale-105 shadow-lg shadow-coffee-600/20 flex flex-col items-center justify-center leading-tight group">
+                        <span class="font-bold text-sm uppercase tracking-wide">Order Now</span>
+                        <span class="text-xs font-mono opacity-90 group-hover:opacity-100">0910 389 999</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-coffee-800 hover:text-coffee-600 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <i data-lucide="menu" class="block h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-coffee-50 border-t border-coffee-100 absolute w-full shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-coffee-900 hover:bg-coffee-100 hover:text-coffee-600">Home</a>
+                <a href="#menu" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-coffee-900 hover:bg-coffee-100 hover:text-coffee-600">Menu</a>
+                <a href="#about" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-coffee-900 hover:bg-coffee-100 hover:text-coffee-600">About</a>
+                <a href="#reviews" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-coffee-900 hover:bg-coffee-100 hover:text-coffee-600">Reviews</a>
+                <a href="#contact" class="mobile-link block px-3 py-2 rounded-md text-base font-medium text-coffee-900 hover:bg-coffee-100 hover:text-coffee-600">Contact</a>
+                
+                <a href="tel:0910389999" class="block w-full text-center mt-4 bg-coffee-600 text-white px-5 py-3 rounded-xl font-medium hover:bg-coffee-700 flex flex-col items-center justify-center gap-1">
+                    <span class="font-bold uppercase tracking-wide">Order Now</span>
+                    <span class="text-sm opacity-90">0910 389 999</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-coffee-50">
+        <!-- Background Blobs -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-coffee-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-96 h-96 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="text-center md:text-left reveal">
+                    <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-semibold tracking-wide uppercase mb-6">
+                        <i data-lucide="star" class="w-3 h-3 fill-orange-800"></i>
+                        #1 Coffee Shop in Juba
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-coffee-900 leading-tight mb-6">
+                        Great Coffee <br />
+                        <span class="text-coffee-600 italic">& Tea</span> in Juba
+                    </h1>
+                    
+                    <p class="text-lg text-slate-600 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                        Experience the perfect blend of cozy atmosphere and premium beans. 
+                        Whether you're looking for a quiet spot to work, a place to gather 
+                        with friends, or just a great cup of coffee.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#menu" class="group bg-coffee-700 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-coffee-800 transition-all hover:shadow-lg hover:shadow-coffee-700/30 flex items-center justify-center gap-2">
+                            View Menu
+                            <i data-lucide="arrow-up-right" class="w-5 h-5 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
+                        </a>
+                        <a href="tel:0910389999" class="bg-coffee-50 text-coffee-800 border-2 border-coffee-200 px-8 py-4 rounded-full font-medium text-lg hover:border-coffee-400 transition-all flex flex-col items-center justify-center leading-tight min-w-[180px]">
+                            <span>Call Now</span>
+                            <span class="text-sm font-mono font-bold">0910 389 999</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-10 flex items-center justify-center md:justify-start gap-8">
+                        <div>
+                            <p class="text-3xl font-bold text-coffee-900">4.8</p>
+                            <div class="flex text-amber-500">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <p class="text-sm text-slate-500">Google Rating</p>
+                        </div>
+                        <div class="w-px h-12 bg-coffee-200"></div>
+                        <div>
+                            <p class="text-3xl font-bold text-coffee-900">100%</p>
+                            <p class="text-sm text-slate-500">Natural</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div class="relative hidden md:block reveal delay-200">
+                    <div class="relative z-20 mx-auto w-3/4 aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=600" 
+                             alt="Delicious Coffee Cup" 
+                             class="object-cover w-full h-full rounded-[3rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500 ease-out" />
+                        
+                        <!-- Floating Tag -->
+                        <div class="absolute -bottom-8 -left-8 bg-coffee-50 p-4 rounded-2xl shadow-xl flex items-center gap-3 z-30 floating-tag">
+                            <div class="bg-orange-100 p-2 rounded-full">
+                                <span class="text-xl">🥐</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-coffee-900">Quick Bites</p>
+                                <p class="text-xs text-slate-500">Fresh Pastries</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-coffee-200 to-transparent rounded-full opacity-20 -z-10 blur-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-coffee-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center reveal">
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="wifi" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Free Wifi</h4>
+                    <p class="text-xs text-coffee-200">High speed internet</p>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="car" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Free Parking</h4>
+                    <p class="text-xs text-coffee-200">Street & Lot available</p>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="armchair" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Cozy Seating</h4>
+                    <p class="text-xs text-coffee-200">For solo or groups</p>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="baby" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Kid Friendly</h4>
+                    <p class="text-xs text-coffee-200">Good for families</p>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="users" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Table Service</h4>
+                    <p class="text-xs text-coffee-200">Relax, we serve you</p>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <div class="bg-coffee-800 p-4 rounded-2xl mb-4 group-hover:bg-coffee-700 transition-colors">
+                        <i data-lucide="coffee" class="w-8 h-8 text-amber-400"></i>
+                    </div>
+                    <h4 class="font-bold mb-1">Tourist Friendly</h4>
+                    <p class="text-xs text-coffee-200">Welcome to Juba</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-coffee-50 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-coffee-100 rounded-bl-full -z-10 opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-50 rounded-tr-full -z-10 opacity-50"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-coffee-900 mb-6">Our Menu</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg">
+                    Crafted with passion, served with love. Click on the categories below to explore our offerings.
+                </p>
+            </div>
+
+            <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-sm border border-coffee-100 reveal delay-100" id="menu-container">
+                <!-- Breakfast & Brunch -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="true">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Breakfast & Brunch</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300 rotate-180">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="pb-8 space-y-6">
+                            <div class="group">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Classic French Toast</h4>
+                                    <div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div>
+                                    <span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$8.00</span>
+                                </div>
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed max-w-xl">A delightful plate of French toast with syrup, two sausages, baked beans, a fried egg, and berry fruits, served with a refreshing honey mustard salad.</p>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Fruity Pancake</h4>
+                                    <div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div>
+                                    <span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$8.00</span>
+                                </div>
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed max-w-xl">Four pancakes with granola and seasonal fruits, topped with whipped cream and pancake syrup.</p>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Spinach Omelette</h4>
+                                    <div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div>
+                                    <span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$8.00</span>
+                                </div>
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed max-w-xl">Mushroom, mozzarella cheese, and baby spinach omelette, garnished with black olives, avocado, tomatoes, and served with toasted bread.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Waffles -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Waffles</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Fruity Waffle</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">FULL – $10.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Strawberry Waffle</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">HALF – $6.00 | FULL – $10.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Grape Waffle</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">HALF – $6.00 | FULL – $10.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mango Waffle</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">HALF – $6.00 | FULL – $10.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panini & Sandwiches -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Panini & Sandwiches</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Grilled Chicken Panini</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$11.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Double Cheese Beef Panini</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$11.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Roasted Veg Panini</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$11.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Egg Mayo Sandwich</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Ham & Cheese Sandwich</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$7.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chicken Curry Sandwich</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Club Sandwich</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$8.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salad & Wrap -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Salad & Wrap</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Thai Beef Salad</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Orange Chicken Salad</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Green Salad</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Fruity Salad</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Thai Beef Wrap</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Grilled Chicken Wrap</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mozzarella & Avocado Wrap</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$9.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coffee -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Coffee</h3>
+                            <span class="text-sm font-medium text-coffee-500 uppercase tracking-wider">(Hot / Iced)</span>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Espresso</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00 / $3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Espresso Macchiato</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $3.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Long Black</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Short Latte</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Café Latte</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Vanilla Latte</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.50 / $5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Hazelnut Latte</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.50 / $5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Café Mocha</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50 / $6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Caramel Macchiato</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50 / $6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Cappuccino</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Americano</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Café Kilimanjaro</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.50 / $5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Hot Chocolate</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Coffee -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">More Coffee</h3>
+                            <span class="text-sm font-medium text-coffee-500 uppercase tracking-wider">(Brew Methods)</span>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chemex</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Aeropress</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.50 / $5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">French Press</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Hario V60</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50 / $4.50</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tea -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Tea</h3>
+                            <span class="text-sm font-medium text-coffee-500 uppercase tracking-wider">(Hot / Iced)</span>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mixed Tea</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Masala Tea</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chamomile</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Rooibos</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Peppermint</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Black Tea</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Green Tea</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Lemon & Ginger</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00 / $4.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Hot Milk</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shakes & Smoothies -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Shakes & Smoothies</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Espresso Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Strawberry Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chocolate Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mango Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Vanilla Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Blueberry Milkshake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Strawberry Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Raspberry Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Blueberry Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mango Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mango Passion Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mixed Fruit Smoothie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fresh Juice & Slushes -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Fresh Juice & Slushes</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Apple Carrot Orange</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$6.50</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Grape Vitamin</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.50</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Orange Grapefruit Ade</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Grapefruit Ade</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.50</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mixed Berry Slush</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Mango Slush</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Blueberry Slush</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Strawberry Slush</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                             <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Raspberry Slush</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ice Cream & Water -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Ice Cream & Water</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Almond Strawberry Affogato</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Almond Chocolate Affogato</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Almond Vanilla Affogato</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$5.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Still Water 600ml</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$1.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Sparkling Water 450ml</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pastry -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Pastry</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Plain Croissant</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chocolate Croissant</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Raspberry Croissant</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Hazelnut Croissant</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Almond Croissant</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Brownie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chocolate Brownie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Plain Muffin</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chocolate Muffin</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Cinnamon Roll</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chicken & Leek Basket</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$4.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Coffee Bun</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Salt Bread</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Sweet Milk Bread</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Sweet Roll</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Sausage Roll</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chicken Pie</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Chocolate Roll Cake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Half Castella Cake</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.50</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Plain Baguette</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Madeleine (2 pcs)</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$2.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Tiramisu</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.50</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donuts -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Donuts</h3>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Panacota Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Sugar Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Cookie Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Vanilla Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Nutty Cream Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">White Drizzle Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                            <div class="group"><div class="flex justify-between items-baseline"><h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">Dark Drizzle Donut</h4><div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div><span class="font-serif font-bold text-coffee-700 whitespace-nowrap">$3.00</span></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Coffee Blends -->
+                <div class="border-b border-coffee-100 last:border-0">
+                    <button class="accordion-button w-full flex justify-between items-center py-6 text-left group focus:outline-none select-none" aria-expanded="false">
+                        <div class="flex items-baseline gap-3 flex-wrap">
+                            <h3 class="text-2xl font-serif font-bold text-coffee-800 group-hover:text-coffee-600 transition-colors">Our Coffee Blends</h3>
+                            <span class="text-sm font-medium text-coffee-500 uppercase tracking-wider">(Roasted Beans)</span>
+                        </div>
+                        <div class="text-coffee-400 group-hover:text-coffee-600 transition-transform duration-300">
+                           <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+                    <div class="accordion-content hidden">
+                        <div class="pb-8 space-y-6">
+                            <div class="group">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">ROMEO</h4>
+                                    <div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div>
+                                    <span class="font-serif font-bold text-coffee-700 whitespace-nowrap text-sm sm:text-base">250g – $10.00 | 500g – $20.00 | 1kg – $50.00</span>
+                                </div>
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed max-w-xl">Smoky dark chocolate flavor with a nutty finish.</p>
+                            </div>
+                            <div class="group">
+                                <div class="flex justify-between items-baseline">
+                                    <h4 class="font-medium text-coffee-900 text-lg group-hover:text-coffee-600">JULIET</h4>
+                                    <div class="flex-grow mx-4 border-b border-dotted border-coffee-300 relative -top-1"></div>
+                                    <span class="font-serif font-bold text-coffee-700 whitespace-nowrap text-sm sm:text-base">250g – $10.00 | 500g – $20.00 | 1kg – $50.00</span>
+                                </div>
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed max-w-xl">A fruity blend with floral notes that brightens your morning.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-coffee-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Visual Side -->
+                <div class="w-full lg:w-1/2 reveal">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-coffee-200 rounded-2xl transform rotate-3 translate-x-2 translate-y-2 -z-10"></div>
+                        <img src="https://github.com/malualmadut211-bot/ai-studio-media/blob/8c5d4f6f7ed0448a6630103073ed868b0d0ff3d2/about-image.jpg.png?raw=true" 
+                             alt="Connect Coffee - About Us" 
+                             class="w-full h-96 md:h-[32rem] object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300" />
+                    </div>
+                </div>
+
+                <!-- Text Side -->
+                <div class="w-full lg:w-1/2 reveal delay-200">
+                    <span class="text-orange-600 font-bold tracking-widest text-sm uppercase mb-4 block">Our Story</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-coffee-900 mb-8 leading-tight">
+                        Where Every Cup <br/> Tells a Story
+                    </h2>
+                    
+                    <div class="space-y-6 text-slate-600 text-lg leading-relaxed">
+                        <p>
+                            Nestled in the heart of Juba, <strong>Coffee Connect</strong> is more than just a café—it's a sanctuary for coffee lovers, food enthusiasts, and anyone seeking a cozy escape from the everyday hustle.
+                        </p>
+                        <p>
+                            Since our doors opened, we've been committed to creating an Instagram-worthy space where great conversations flow as freely as our artisanal coffee. Our menu features everything from sizzling hot plates to delicate croissants, each dish crafted with care and passion.
+                        </p>
+                        <p>
+                            With over <strong class="text-coffee-800">5k+ happy customers</strong> and a strong <strong class="text-coffee-800">4.8-star rating</strong>, our community of regulars keeps coming back for the warm ambiance, friendly service, and unforgettable flavors.
+                        </p>
+                    </div>
+
+                    <div class="mt-12 pt-8 border-t border-coffee-200 flex flex-wrap gap-12">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-4xl font-serif font-bold text-coffee-800">4.8</span>
+                                <i data-lucide="star" class="w-6 h-6 fill-orange-500 text-orange-500"></i>
+                            </div>
+                            <span class="text-sm text-slate-500 font-medium uppercase tracking-wide">Google Rating</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                             <div class="flex items-center gap-2">
+                                <span class="text-4xl font-serif font-bold text-coffee-800">5K+</span>
+                                <i data-lucide="users" class="w-6 h-6 text-orange-500"></i>
+                            </div>
+                            <span class="text-sm text-slate-500 font-medium uppercase tracking-wide">Happy Reviews</span>
+                        </div>
+                         <div class="flex flex-col gap-1">
+                             <div class="flex items-center gap-2">
+                                <span class="text-4xl font-serif font-bold text-coffee-800">100+</span>
+                                <i data-lucide="coffee" class="w-6 h-6 text-orange-500"></i>
+                            </div>
+                            <span class="text-sm text-slate-500 font-medium uppercase tracking-wide">Menu Items</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-coffee-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-serif font-bold text-coffee-900 mb-4">What Our Guests Say</h2>
+                <div class="flex items-center justify-center gap-2">
+                    <div class="flex text-amber-500">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <span class="text-lg font-bold text-slate-700">4.8 / 5.0</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal delay-100">
+                <!-- Review 1 -->
+                <div class="bg-coffee-100 p-8 rounded-3xl relative">
+                    <i data-lucide="quote" class="absolute top-8 right-8 w-10 h-10 text-coffee-300"></i>
+                    <div class="flex text-amber-500 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-700 mb-6 italic relative z-10">"Best coffee in Juba! The atmosphere is so cozy and the staff are incredibly friendly."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-coffee-200 rounded-full flex items-center justify-center text-coffee-700 font-bold">S</div>
+                        <div>
+                            <p class="font-bold text-coffee-900 text-sm">Sarah M.</p>
+                            <p class="text-xs text-slate-500">2 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="bg-coffee-100 p-8 rounded-3xl relative">
+                    <i data-lucide="quote" class="absolute top-8 right-8 w-10 h-10 text-coffee-300"></i>
+                    <div class="flex text-amber-500 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-700 mb-6 italic relative z-10">"Perfect spot for working remotely. Fast wifi and the Avocado Toast is a must-try."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-coffee-200 rounded-full flex items-center justify-center text-coffee-700 font-bold">J</div>
+                        <div>
+                            <p class="font-bold text-coffee-900 text-sm">John D.</p>
+                            <p class="text-xs text-slate-500">1 month ago</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="bg-coffee-100 p-8 rounded-3xl relative">
+                    <i data-lucide="quote" class="absolute top-8 right-8 w-10 h-10 text-coffee-300"></i>
+                    <div class="flex text-amber-500 mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-700 mb-6 italic relative z-10">"“A hidden gem for coffee lovers.” The coffee here is consistently excellent, and the food menu is impressive."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-coffee-200 rounded-full flex items-center justify-center text-coffee-700 font-bold">J</div>
+                        <div>
+                            <p class="font-bold text-coffee-900 text-sm">James K.</p>
+                            <p class="text-xs text-slate-500">3 weeks ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-coffee-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 overflow-hidden bg-coffee-100 rounded-[3rem] shadow-xl reveal">
+                <!-- Info Side -->
+                <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                    <h2 class="text-4xl font-serif font-bold text-coffee-900 mb-8">Visit Us Today</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-coffee-200 p-3 rounded-full text-coffee-600">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-coffee-900 text-lg">Address</h3>
+                                <p class="text-slate-600">VJ55+3FJ, Juba, South Sudan</p>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Connect+Coffee+Juba+South+Sudan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-coffee-600 font-medium text-sm mt-2 hover:underline">
+                                    Get Directions <i data-lucide="navigation" class="w-3 h-3"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-coffee-200 p-3 rounded-full text-coffee-600">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-coffee-900 text-lg">Opening Hours</h3>
+                                <p class="text-slate-600">Open Daily</p>
+                                <p class="text-slate-600">Closes at 8:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-coffee-200 p-3 rounded-full text-coffee-600">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-coffee-900 text-lg">Contact</h3>
+                                <p class="text-slate-600">+211 910 389 999</p>
+                                <a href="tel:0910389999" class="text-coffee-600 font-medium text-sm mt-2 hover:underline block">
+                                    Call Us
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Side -->
+                <div class="h-96 lg:h-auto min-h-[400px] w-full bg-slate-200 relative">
+                     <iframe 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0" 
+                        loading="lazy" 
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Coffee Connect Location"
+                        src="https://maps.google.com/maps?q=4.858821022540334,31.614009272555318&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                     </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-coffee-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="bg-white text-coffee-900 p-1.5 rounded-lg">
+                            <i data-lucide="coffee" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-serif font-bold text-2xl">Connect Coffee</span>
+                    </div>
+                    <p class="text-coffee-200 mb-6 max-w-sm">
+                        Your daily dose of comfort in Juba. Join us for great coffee, delicious bites, and a welcoming atmosphere.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/share/1Hf19kxN6p/" target="_blank" rel="noopener noreferrer" class="text-coffee-300 hover:text-white transition-colors" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-6 h-6"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@connectcoffee_juba?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" class="text-coffee-300 hover:text-white transition-colors" aria-label="TikTok">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-amber-500">Quick Links</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#home" class="text-coffee-200 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#menu" class="text-coffee-200 hover:text-white transition-colors">Menu</a></li>
+                        <li><a href="#about" class="text-coffee-200 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="text-coffee-200 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Mini -->
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-amber-500">Contact Info</h4>
+                    <address class="text-coffee-200 not-italic space-y-4">
+                        <p>VJ55+3FJ, Juba, South Sudan</p>
+                        <p>+211 910 389 999</p>
+                        <p>Open Daily until 8:00 PM</p>
+                    </address>
+                </div>
+            </div>
+
+            <div class="border-t border-coffee-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-coffee-400">
+                <p>&copy; 2026 Connect Coffee. All rights reserved.</p>
+                <p class="mt-2 md:mt-0">Designed for Juba's Coffee Lovers</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Actions -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+        <a href="https://wa.me/211910389999" target="_blank" rel="noopener noreferrer" class="bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-all hover:scale-110" aria-label="Chat on WhatsApp">
+            <i data-lucide="message-circle" class="w-6 h-6"></i>
+        </a>
+        <a href="tel:+211910389999" class="bg-coffee-600 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:bg-coffee-700 transition-all hover:scale-110" aria-label="Call Now">
+            <i data-lucide="phone" class="w-6 h-6"></i>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/main.js"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
